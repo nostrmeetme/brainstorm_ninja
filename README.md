@@ -1,5 +1,7 @@
 A collection of experimental apps for bringing web of trust to nostr.
 
+Minor test edit. 
+
 Currently two apps:
 
 Nostrapedia: wikipedia for nostr, using [NIP-54](https://github.com/nostr-protocol/nips/blob/master/54.md)
