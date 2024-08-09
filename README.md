@@ -1,6 +1,6 @@
 A collection of experimental apps for bringing web of trust to nostr.
 
-Minor test edit. 
+Another test edit. 
 
 Currently two apps:
 

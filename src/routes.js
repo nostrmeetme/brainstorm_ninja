@@ -1,4 +1,5 @@
 import routesMain from 'src/routes/routesMain'
+import routesBadges from 'src/routes/routesBadges'
 import routesConceptGraph from 'src/routes/routesConceptGraph'
 import routesGrapevine from 'src/routes/routesGrapevine'
 import routesTwittr from 'src/routes/routesTwittr'
@@ -14,6 +15,7 @@ import routesSettings from 'src/routes/routesSettings'
 
 const routes = [
   ...routesMain,
+  ...routesBadges,
   ...routesConceptGraph,
   ...routesGrapevine,
   ...routesTwittr,

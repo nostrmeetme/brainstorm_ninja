@@ -18,6 +18,7 @@ import navigationConceptGraph from 'src/nav/_navConceptGraph'
 import navigationGrapevine from 'src/nav/_navGrapevine'
 import navigationGrapevineDevMode from 'src/nav/_navGrapevineDevMode'
 import navigationCuratedLists from 'src/nav/_navCuratedLists'
+import navigationBadges from 'src/nav/_navBadges'
 import navigationNestedLists from 'src/nav/_navNestedLists'
 import navigationNostrapedia from 'src/nav/_navNostrapedia'
 import navigationNostrapediaDevMode from 'src/nav/_navNostrapediaDevMode'
@@ -60,6 +61,8 @@ function getNavigation(activeApp, signedIn, developmentMode) {
       return navigationNestedLists
     case 'curatedLists':
       return navigationCuratedLists
+    case 'badges':
+      return navigationBadges
     case 'wiki':
       if (developmentMode == 'show') {
         return navigationNostrapediaDevMode

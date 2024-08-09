@@ -119,7 +119,7 @@ const AppHeaderDropdown = () => {
           <CDropdownHeader className="bg-body-secondary fw-semibold mb-2">Apps</CDropdownHeader>
           <CDropdownItem href="#/nostrapedia" onClick={() => dispatch(updateApp('wiki'))}>
             <CIcon icon={cibWikipedia} className="me-2" />
-            Wiki
+            Nostrapedia
           </CDropdownItem>
           <CDropdownItem href="#/grapevine" onClick={() => dispatch(updateApp('grapevine'))}>
             <CIcon icon={cilApple} className="me-2" />
@@ -175,6 +175,14 @@ const AppHeaderDropdown = () => {
           >
             <CIcon icon={cilList} className="me-2" />
             Curated Lists
+          </CDropdownItem>
+          <CDropdownItem
+            className={devModeClassName}
+            href="#/badges"
+            onClick={() => dispatch(updateApp('badges'))}
+          >
+            <CIcon icon={cilList} className="me-2" />
+            Badges
           </CDropdownItem>
           <div className={loggedIn}>
             <CDropdownHeader className="bg-body-secondary fw-semibold mb-2">
