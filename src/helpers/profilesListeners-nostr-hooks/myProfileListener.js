@@ -63,6 +63,7 @@ const ListenerOn = () => {
 
   useEffect(() => {
     if (events.length > 0) {
+      console.log('adding event ' + events.length + ' to local storage (redux)')
       const num = events.length - 1
       const eventNS = events[num]
       processEventNS(eventNS)
