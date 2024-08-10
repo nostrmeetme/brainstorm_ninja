@@ -5,7 +5,7 @@ import { ndk_brainstorm } from '../../../helpers/ndk'
 import { CButton } from '@coreui/react'
 import { nip19 } from 'nostr-tools'
 
-const byteSize = str => new Blob([str]).size;
+const byteSize = (str) => new Blob([str]).size
 
 const oEventDefault = {
   content: '',
@@ -16,6 +16,7 @@ const oEventDefault = {
     ['wordType', 'influenceScoresList'],
     ['w', 'influenceScoresList'],
     ['context', ''],
+    ['c', ''],
     ['d', 'influenceScoresList'],
   ],
   created_at: null,
@@ -44,6 +45,7 @@ const ExportInfluenceScores = () => {
 
   const [oNdkEvent, setONdkEvent] = useState({})
   const [numProfiles, setNumProfiles] = useState(0)
+  const [numTags, setNumTags] = useState(0)
 
   const createInfluenceScoreEvent = async (whetherToPublish) => {
     const ndkEvent = new NDKEvent(ndk_brainstorm)
@@ -53,13 +55,14 @@ const ExportInfluenceScores = () => {
     Object.keys(oProfilesByPubkey).forEach((pubkey, item) => {
       const npub = nip19.npubEncode(pubkey)
       let influence = '' + oProfilesByNpub[npub].wotScores.baselineInfluence.influence // '' + is to make sure it is stringified
-      if (influence > 0.1) {
+      if (influence > 0) {
         aTags.push(['p', pubkey, influence])
       }
     })
     const aTagsSorted = aTags.sort((a, b) => b[2] - a[2])
     setNumProfiles(aTagsSorted.length)
     ndkEvent.tags = oEventDefault.tags.concat(aTagsSorted)
+    setNumTags(ndkEvent.tags.length)
     await ndkEvent.sign(signer)
     // console.log('ndkEvent: ' + JSON.stringify(ndkEvent, null, 4))
     if (whetherToPublish) {
@@ -99,9 +102,18 @@ const ExportInfluenceScores = () => {
           </CButton>
         </div>
       </div>
-      <div>num profiles starting: {Object.keys(oProfilesByPubkey).length}</div>
-      <div>num profiles with nonzero influence: {numProfiles}</div>
-      <div>size: {byteSize(JSON.stringify(oNdkEvent)) / 1000000} MB</div>
+      <p>
+        Currently only the generic (context is empty) Influence Scores are exported. Contextual
+        scores are forthcoming. Kind is 39902 as per the tapestry protocol, but with minor changes I
+        could make it a NIP-51 list (kind 30000, if I recall correctly) modified to include the
+        score in each p-tag.
+      </p>
+      <div>num pubkeys in local storage: {Object.keys(oProfilesByPubkey).length}</div>
+      <div>num pubkeys with nonzero Influence Score: {numProfiles}</div>
+      <div>number of tags: {numTags}</div>
+      <div>file size: {byteSize(JSON.stringify(oNdkEvent)) / 1000000} MB</div>
+      <p>All influence scores greater than zero are included in the event.</p>
+      <p>Publish button is active; publishes to relay.tapestry.ninja</p>
       <pre>{JSON.stringify(oNdkEvent, null, 4)}</pre>
     </>
   )

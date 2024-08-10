@@ -18,6 +18,18 @@ export function safeDecode(str) {
   } catch (e) {}
 }
 
+export function safeNpubEncode(str) {
+  try {
+    const npub = nip19.npubEncode(str)
+    if (npub) {
+      return npub
+    }
+    return false
+  } catch (e) {
+    return false
+  }
+}
+
 export function getPubkeyFromNpub(str) {
   try {
     const decoded = nip19.decode(str)

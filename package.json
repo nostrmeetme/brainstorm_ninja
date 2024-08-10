@@ -47,6 +47,7 @@
     "classnames": "^2.5.1",
     "core-js": "^3.36.1",
     "localforage": "^1.10.0",
+    "nostr-hooks": "^2.8.4",
     "nostr-react": "github:aussedatlo/nostr-react#dev/reconnect",
     "nostr-tools": "^2.5.2",
     "prop-types": "^15.8.1",
