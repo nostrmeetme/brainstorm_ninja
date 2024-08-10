@@ -23,7 +23,7 @@ const defaultRelays = [
 // const dexieAdapter = new NDKCacheAdapterDexie({ dbName: 'your-db-name' })
 // create a new NDK instance
 // const ndk = new NDK({ cacheAdapter: dexieAdapter, explicitRelayUrls: defaultRelays })
-
+/*
 const sigWorker = import.meta.env.DEV
   ? new Worker(new URL('@nostr-dev-kit/ndk/workers/sig-verification?worker', import.meta.url), {
       type: 'module',
@@ -31,6 +31,9 @@ const sigWorker = import.meta.env.DEV
   : new NDKSigVerificationWorker()
 const ndk = new NDK({ explicitRelayUrls: defaultRelays })
 ndk.signatureVerificationWorker = sigWorker
+*/
+
+const ndk = new NDK({ explicitRelayUrls: defaultRelays })
 
 // connect to the relays
 ndk
