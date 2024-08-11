@@ -10,6 +10,8 @@
 
 The Grapevine allows you and your community to identify who is the most trustworthy, and in what context, to curate content, facts and information.
 
+Customers will include everyday users as well as businesses that are part of the nostr ecosystem.
+
 ## How it works
 
 The Grapevine monitors nostr continuously and uses specialized algorithms to calculate contextual Grapevine web of trust scores. These scores are made availalbe to nostr clients who use them to customize your experience.
@@ -45,6 +47,23 @@ Subscription tiers will provide additional services:
 ### everyday nostr users
 - example 1
 - example 2
+
+## Prototype
+
+brainstorm.ninja:
+- calculate Grapevine WoT Scores from follows and mutes
+To Do:
+- incorporate zaps
+
+Tech stack includes:
+- NDK
+- React
+- nostr-hooks
+- coreUI
+
+Expertise in the following:
+- DVM
+- nostr relay management
 
 ## How is this different than all previous attempts at WoT
 
