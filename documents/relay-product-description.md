@@ -72,7 +72,7 @@ Expertise in the following:
 
 ## How is this different than all previous attempts at WoT
 
-developed by a neuroscientist to mirror how trust is calculated in the brain. The main difference is that your computer can keep track of the reputations of billions of people in hundreds of contexts -- many more than you can do in your head.
+the tapestry protocol, method of "interpretation," developed by a neuroscientist to mirror how trust is calculated in the brain. The main difference is that your computer can keep track of the reputations of billions of people in hundreds or even thousands of contexts -- many more than you can do in your head.
 
 ## How is this not a social credit score
 
