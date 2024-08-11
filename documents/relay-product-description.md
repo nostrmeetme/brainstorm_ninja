@@ -8,6 +8,50 @@
 
 ## Product Description
 
+The Grapevine allows you and your community to identify who is the most trustworthy, and in what context, to curate content, facts and information.
+
+## How it works
+
+The Grapevine monitors nostr continuously and uses specialized algorithms to calculate contextual Grapevine web of trust scores. These scores are made availalbe to nostr clients who use them to customize your experience.
+
+## What information does the Grapevine harness to calculate Grapevine WoT Scores
+
+Currently: 
+- likes, zaps, reactions
+- Grapevine endorsements
+
+Actively developing new sources of data. Such as explicit trust attestations. Which will augment the above data sources, not replace them.
+
+## How much does it cost
+
+Free tier
+
+Subscription tiers will provide additional services:
+
+## Who is this service for?
+
+### relay operators
+- filter out spam
+
+### Lightning node operators
+- Identify other lghtning nodes that you may want to connect to -- and those you should avoid
+
+### everyday nostr users
+- example 1
+- example 2
+
+## How is this different than all previous attempts at WoT
+
+developed by a neuroscientist to mirror how trust is calculated in the brain. The main difference is that your computer can keep track of the reputations of billions of people in hundreds of contexts -- many more than you can do in your head.
+
+## How is this not a social credit score
+
+It's decentralized. Social credit scores are centralized. The only single point of control is YOU, because YOU are always at the center of YOUR Grapevine.
+
+Bitcoin does not equal fiat. Likewise, the Grapevine does not equal the CCP social credit scoring system. 
+
+## Tech specs
+
 nostr relay + DVM + web of trust (+ integrated lightning wallet?)
 
 The Grapevine Relay is an open source personal nostr relay that harnesses web of trust to improve every aspect of your nostr experience. 
