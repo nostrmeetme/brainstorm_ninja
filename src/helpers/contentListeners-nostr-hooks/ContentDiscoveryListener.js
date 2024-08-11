@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { nip19, validateEvent } from 'nostr-tools'
+import { useSubscribe } from 'nostr-hooks'
 import { fetchFirstByTag } from 'src/helpers'
 import { ndk } from '../ndk'
 import { makeEventSerializable } from '..'
@@ -13,6 +14,9 @@ const ContentDiscoveryListener = () => {
     kinds: [9902, 39902],
     '#w': ['contextualEndorsement'],
   }
+
+  const filters = useMemo(() => [filter], [])
+  const { events, eose } = useSubscribe({ filters })
 
   const sub7 = ndk.subscribe(filter)
   sub7.on('event', async (eventNS) => {

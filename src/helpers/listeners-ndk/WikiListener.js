@@ -1,13 +1,11 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React from 'react'
+import { useDispatch } from 'react-redux'
 import { ndk } from '../ndk'
-import { validateEvent, verifyEvent } from 'nostr-tools'
 import { addArticle } from '../../redux/features/nostrapedia/slice'
 import { makeEventSerializable } from '..'
 import { addNewPubkey } from '../../redux/features/profiles/slice'
 
-const WikiListenerMain = () => {
-  const myPubkey = useSelector((state) => state.profile.pubkey)
+const WikiListener = () => {
   const dispatch = useDispatch()
 
   const filter = {
@@ -16,9 +14,7 @@ const WikiListenerMain = () => {
 
   const sub11 = ndk.subscribe(filter)
   sub11.on('event', async (eventNS) => {
-    // const author = eventNS.author
-    // const profile = await author.fetchProfile()
-    // console.log(`${profile.name}: ${eventNS.content}`)
+    console.log('number of events: ' + typeof sub11)
     const event = makeEventSerializable(eventNS)
     const pubkey = event.pubkey
     dispatch(addNewPubkey(pubkey))
@@ -28,18 +24,6 @@ const WikiListenerMain = () => {
   return <></>
 }
 
-const WikiListener = () => {
-  const listenerMethod = useSelector((state) => state.settings.general.listenerMethod)
-  if (listenerMethod == 'off') {
-    return <></>
-  }
-  if (listenerMethod == 'oneMainListener') {
-    return <></>
-  }
-  if (listenerMethod == 'individualListeners') {
-    return <WikiListenerMain />
-  }
-  return <></>
-}
-
 export default WikiListener
+
+// <pre>sub11: {JSON.stringify(sub11, null, 4)}</pre>

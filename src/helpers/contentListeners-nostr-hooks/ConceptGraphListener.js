@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addAction, addCategory, addContext } from 'src/redux/features/grapevine/slice'
 import { nip19, validateEvent } from 'nostr-tools'
+import { useSubscribe } from 'nostr-hooks'
 import { fetchFirstByTag } from 'src/helpers'
 import { ndk } from '../ndk'
 import { addTrustAttestation } from 'src/redux/features/grapevine/slice'
@@ -19,6 +20,9 @@ const ConceptGraphListenerMain = () => {
     since: cutoffTime,
     '#P': ['tapestry'],
   }
+
+  const filters = useMemo(() => [filter], [])
+  const { events, eose } = useSubscribe({ filters })
 
   const sub6 = ndk.subscribe(filter)
   sub6.on('event', async (eventNS) => {

@@ -6,7 +6,7 @@ import {
   updateKind0Event,
   processKind3Event,
 } from 'src/redux/features/profiles/slice'
-import { nip19, validateEvent } from 'nostr-tools'
+import { nip19 } from 'nostr-tools'
 import { useSubscribe } from 'nostr-hooks'
 import { makeEventSerializable } from '..'
 import { processKind10000Event } from '../../redux/features/profiles/slice'

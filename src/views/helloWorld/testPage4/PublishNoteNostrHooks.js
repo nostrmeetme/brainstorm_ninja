@@ -64,15 +64,18 @@ const PublishNoteNostrHooks = () => {
   }
   */
 
+  const { signer } = useSigner()
   const { createNewEvent } = useNewEvent()
   const publishNoteNostrHooks = async () => {
     const nip07signer = new NDKNip07Signer()
     const event = createNewEvent()
     event.kind = 1
     event.content = content
-    await event.sign(nip07signer)
+    // event.sign(signer)
+    signer.sign(event)
+    // await event.sign(nip07signer)
     console.log('event: ' + JSON.stringify(event, null, 4))
-    await event.publish()
+    // await event.publish()
   }
 
   const createAnotherNoteButton = useCallback(() => {

@@ -27,7 +27,7 @@ import {
 import { whenTopicWasLastUpdated } from '../topic/Topic'
 import { secsToTime } from '../../../helpers'
 import { ShowAuthorBrainstormProfileImageOnly } from '../components/ShowAuthorBrainstormProfileImageOnly'
-import WikiListener from '../../../helpers/listeners-ndk-react/WikiListener'
+import WikiListener from '../../../helpers/listeners-ndk/WikiListener'
 import { addNewPubkey } from '../../../redux/features/profiles/slice'
 import { updateApp } from 'src/redux/features/siteNavigation/slice'
 

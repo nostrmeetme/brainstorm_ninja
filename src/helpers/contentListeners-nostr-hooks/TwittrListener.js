@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { ndk } from '../ndk'
 import { validateEvent } from 'nostr-tools'
+import { useSubscribe } from 'nostr-hooks'
 import { processKind1Event } from '../../redux/features/twittr/slice'
 import { makeEventSerializable } from '..'
 
@@ -14,6 +15,9 @@ const TwittrListenerMain = ({ aPubkeys }) => {
     kinds: [1],
     authors: aPubkeys,
   }
+
+  const filters = useMemo(() => [filter], [])
+  const { events, eose } = useSubscribe({ filters })
 
   const sub9 = ndk.subscribe(filter)
   sub9.on('event', async (eventNS) => {

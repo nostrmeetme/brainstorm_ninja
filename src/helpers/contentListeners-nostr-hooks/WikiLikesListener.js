@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ndk } from '../ndk'
 import { validateEvent, verifyEvent } from 'nostr-tools'
+import { useSubscribe } from 'nostr-hooks'
 import { addArticle, addKind7Rating } from '../../redux/features/nostrapedia/slice'
 import { makeEventSerializable } from '..'
 import { addNewPubkey } from '../../redux/features/profiles/slice'
@@ -18,6 +19,9 @@ const WikiLikesListenerMain = () => {
     kinds: [7],
     '#e': aArticleIds,
   }
+
+  const filters = useMemo(() => [filter], [])
+  const { events, eose } = useSubscribe({ filters })
 
   const sub10 = ndk.subscribe(filter)
   sub10.on('event', async (eventNS) => {

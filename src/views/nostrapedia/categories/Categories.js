@@ -17,7 +17,7 @@ import {
   CTableRow,
 } from '@coreui/react'
 import { updateViewNostrapediaCategory } from '../../../redux/features/siteNavigation/slice'
-import WikiListener from '../../../helpers/listeners-ndk-react/WikiListener'
+import WikiListener from '../../../helpers/listeners-ndk/WikiListener'
 import CIcon from '@coreui/icons-react'
 import { cilPencil } from '@coreui/icons'
 

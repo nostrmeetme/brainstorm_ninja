@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { ndk } from '../ndk'
+import { useSubscribe } from 'nostr-hooks'
 import { addArticle } from '../../redux/features/nostrapedia/slice'
 import { makeEventSerializable } from '..'
 import { addNewPubkey } from '../../redux/features/profiles/slice'
@@ -14,6 +15,9 @@ const WikiNaddrListener = ({ naddr }) => {
   let filter = {
     kinds: [30818],
   }
+
+  const filters = useMemo(() => [filter], [])
+  const { events, eose } = useSubscribe({ filters })
 
   if (decodedNaddr.type == 'naddr') {
     filter = {
