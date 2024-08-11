@@ -16,6 +16,19 @@ Customers will include everyday users as well as businesses that are part of the
 
 The Grapevine monitors nostr continuously and uses specialized algorithms to calculate contextual Grapevine web of trust scores. These scores are made availalbe to nostr clients who use them to customize your experience.
 
+## Example use cases
+
+### relay operators
+- filter out spam
+
+### Lightning node operators
+- Identify other lghtning nodes that you may want to connect to -- and those you should avoid
+
+### everyday nostr users
+- Channels: nostr feeds curated by topic by your Grapevine
+- brand new nostr user
+- filter content on nostrapedia
+
 ## What information does the Grapevine harness to calculate Grapevine WoT Scores
 
 Currently: 
@@ -32,21 +45,13 @@ You will be able to go to our website and enter your npub. That's all it will ta
 
 Similar to `nostr.build`, there will be a free tier and subscription tiers. 
 
-Free tier will provide standard Grapevine WoT Scores and will update them once a day. 
+Free tier will calculate and publish generic Grapevine WoT Scores based on standard interpretations of follows, mutes, and reactions. These will be updated and published to nostr on a regular basis for consumption by nostr clients.
 
-Subscription tiers will provide additional services:
-
-## Who is this service for?
-
-### relay operators
-- filter out spam
-
-### Lightning node operators
-- Identify other lghtning nodes that you may want to connect to -- and those you should avoid
-
-### everyday nostr users
-- example 1
-- example 2
+Subscription tiers will provide more sophisticated score calculation, with additional services to include:
+- more score types
+- more frequent updates
+- more data inputs
+- abiilty to fine tune data interpretation
 
 ## Prototype
 
