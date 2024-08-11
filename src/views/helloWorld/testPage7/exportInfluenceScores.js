@@ -33,7 +33,7 @@ const oEventDefault = {
     ['title', 'Grapevine WoT Scores List'],
     [
       'description',
-      'a list of nostr users and their associated Grapevine WoT Scores as calculated by the Tapestry Profocol',
+      'a list of nostr users and their associated Grapevine WoT Scores as calculated by the Tapestry Protocol',
     ],
     ['c', ''],
   ],
