@@ -22,9 +22,15 @@ Currently:
 
 Actively developing new sources of data. Such as explicit trust attestations. Which will augment the above data sources, not replace them.
 
+## How will I sign up
+
+You will be able to go to our website and enter your npub. That's all it will take. We will also work with popular nostr clients to facilitate the onboarding process, often at the click of just one button.
+
 ## How much does it cost
 
-Free tier
+Similar to `nostr.build`, there will be a free tier and subscription tiers. 
+
+Free tier will provide standard Grapevine WoT Scores and will update them once a day. 
 
 Subscription tiers will provide additional services:
 
