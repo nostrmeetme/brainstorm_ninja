@@ -101,6 +101,7 @@ const ExportInfluenceScores = () => {
   }
 
   const createInfluenceScoreEventKind30000 = async (whetherToPublish) => {
+    console.log('page_7 loc B; num profils:' + Object.keys(oProfilesByPubkey).length)
     // const ndkEvent = new NDKEvent(ndk_brainstorm)
     const ndkEvent = new NDKEvent(ndk)
     ndkEvent.kind = 30000
@@ -109,10 +110,11 @@ const ExportInfluenceScores = () => {
     Object.keys(oProfilesByPubkey).forEach((pubkey, item) => {
       const npub = nip19.npubEncode(pubkey)
       let influence = '' + oProfilesByNpub[npub].wotScores.baselineInfluence.influence // '' + is to make sure it is stringified
-      if (influence > 0) {
+      // if (influence > 0) {
         aTags.push(['p', pubkey, '', influence]) // third string is typically a relay url; currently it is empty string
-      }
+      // }
     })
+    console.log('page_7 loc C')
     const aTagsSorted = aTags.sort((a, b) => b[3] - a[3])
     const aTagsSortedTop1000 = []
     aTagsSorted.forEach((t, item) => {
@@ -120,24 +122,27 @@ const ExportInfluenceScores = () => {
         aTagsSortedTop1000.push(t)
       }
     })
+    console.log('page_7 loc D')
     setNumProfiles(aTagsSortedTop1000.length)
     ndkEvent.tags = oEventDefault.tags.concat(aTagsSortedTop1000)
     setNumTags(ndkEvent.tags.length)
     await ndkEvent.sign(signer)
-    // console.log('ndkEvent: ' + JSON.stringify(ndkEvent, null, 4))
+    console.log('ndkEvent: ' + JSON.stringify(ndkEvent, null, 4))
     if (whetherToPublish) {
       console.log('List published! event id: ' + ndkEvent.id)
       await ndkEvent.publish()
       alert('List published! event id: ' + ndkEvent.id)
     }
     if (!whetherToPublish) {
-      // console.log('publish: NO')
+      console.log('publish: NO')
       setONdkEvent(ndkEvent)
     }
   }
 
   useEffect(() => {
+    console.log('page_7 loc A1')
     createInfluenceScoreEventKind30000(false)
+    console.log('page_7 loc A2')
   }, [])
 
   return (
