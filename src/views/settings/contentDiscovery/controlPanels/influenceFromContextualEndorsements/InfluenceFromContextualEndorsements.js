@@ -40,8 +40,7 @@ const InfluenceFromFollowsControlPanel = () => {
     setContentDiscoveryRigor(newValue)
     dispatch(updateContentDiscoveryRigor(newValue))
   }, [])
-  const resetParameters = () => {
-    // dispatch(wipeGrapevine())
+  const resetContentDiscoveryParameters = () => {
     changeContentDiscoveryRigor(defContDiscRigor)
   }
   return (
@@ -96,7 +95,7 @@ const InfluenceFromFollowsControlPanel = () => {
               />
             </CCardBody>
           </CCard>
-          <CButton color="primary" onClick={resetParameters}>
+          <CButton color="primary" onClick={resetContentDiscoveryParameters}>
             Reset parameters to recommended values
           </CButton>
         </CCol>

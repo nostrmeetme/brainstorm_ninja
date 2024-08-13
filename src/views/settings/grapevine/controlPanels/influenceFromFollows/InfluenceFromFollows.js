@@ -30,7 +30,6 @@ import {
   updateRigor,
   wipeGrapevine,
 } from '../../../../../redux/features/grapevine/slice'
-// import InfluenceCalculations from './influenceCalculations'
 import {
   defAttFac,
   defDunbarNumber,
@@ -133,7 +132,7 @@ const InfluenceFromFollowsControlPanel = () => {
     setMuteInterpretationConfidence(newValue)
     dispatch(updateMuteInterpretationConfidence(newValue))
   }, [])
-  const resetParameters = () => {
+  const resetGrapevineParameters = () => {
     dispatch(wipeGrapevine())
     changeDunbarNumber(defDunbarNumber)
     changeAttenuationFactor(defAttFac)
@@ -385,7 +384,7 @@ const InfluenceFromFollowsControlPanel = () => {
               />
             </CCardBody>
           </CCard>
-          <CButton color="primary" onClick={resetParameters}>
+          <CButton color="primary" onClick={resetGrapevineParameters}>
             Reset parameters to recommended values
           </CButton>
         </CCol>

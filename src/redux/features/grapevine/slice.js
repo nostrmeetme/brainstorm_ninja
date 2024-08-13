@@ -79,6 +79,7 @@ export const grapevineSlice = createSlice({
       baseLayer: {
         attenuationFactor: defAttFac,
         dunbarNumber: defDunbarNumber,
+        rigor: defRigor,
         defaultUserScore: {
           score: defDefScore,
           confidence: defDefCon,
@@ -179,6 +180,7 @@ export const grapevineSlice = createSlice({
     updateMuteInterpretationConfidence: (state, action) => {
       state.controlPanels.baseLayer.muteInterpretation.confidence = action.payload
     },
+
     addAction: (state, action) => {
       const event = action.payload.event
       const cid = action.payload.cid
