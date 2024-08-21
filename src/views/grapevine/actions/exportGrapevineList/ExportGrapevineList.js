@@ -44,8 +44,16 @@ const LoadEventsProgress = ({listener = 2, color="primary", maxValue=20, msg="",
   const myNpub = useSelector((state) => state.profile.npub)
   const oProfilesByNpub = useSelector((state) => state.profiles.oProfiles.byNpub)
   const aMyFollows = oProfilesByNpub[myNpub] ? oProfilesByNpub[myNpub].follows : []
+
+  // if we already have loaded myfollows, just return
+  let doNotProcess = false
+  if(listener == 2 && aMyFollows?.length ) {
+    doNotProcess = true
+  }
+
   // TODO support more listeners
-  const authorList = listener == 2 ? [myPubkey] : listener == 4 ? aMyFollows : []
+  const authorList = listener == 2 ? [myPubkey]  : aMyFollows 
+  console.log('LoadEventsProgress listener '+listener, authorList)
 
   const filters = React.useMemo(() => [{
     authors: authorList ,
@@ -57,6 +65,7 @@ const LoadEventsProgress = ({listener = 2, color="primary", maxValue=20, msg="",
 
   async function processEventNS(eventNS){
     const event = makeEventSerializable(eventNS)
+    console.log('processing event',event)
     if (event.kind == 0) {
       dispatch(updateKind0Event(event))
       if (event.pubkey == myPubkey) {
@@ -81,16 +90,16 @@ const LoadEventsProgress = ({listener = 2, color="primary", maxValue=20, msg="",
 
   async function processAllEvents(events){
     events.forEach((eventNS, item) => {
-      console.log('confirming local storage of event ' + item, eventNS)
+      console.log('confirming local storage of event ' + item)
       console.log('num tags = ' + eventNS.tags.length)
       processEventNS(eventNS)
     })
   }
 
-  dispatch(toggleIndividualListener({ newState: 'show', num: listener }))
+  // dispatch(toggleIndividualListener({ newState: 'show', num: listener }))
 
   useEffect(() => {
-    if (events.length > 0) {
+    if (events.length > 0 && !doNotProcess) {
       console.log('adding event ' + events.length + ' to local storage (redux)')
       const num = events.length - 1
       const eventNS = events[num]
@@ -103,18 +112,26 @@ const LoadEventsProgress = ({listener = 2, color="primary", maxValue=20, msg="",
   }, [events])
 
   useEffect(() => {
-    if (eose) {
-      dispatch(toggleIndividualListener({ newState: 'hide', num: listener }))
+    if (eose && !doNotProcess) {
+      // dispatch(toggleIndividualListener({ newState: 'hide', num: listener }))
       // setSubState('EOSE reached, now storing in redux ...')
-      processAllEvents(events)
+      // processAllEvents(events)
       setProgreessValue(maxValue)
-      setNextProgress(true)
+      if(setNextProgress) setNextProgress(true)
     }
   }, [eose])
 
+  if(doNotProcess){
+    if(setNextProgress) setNextProgress(true)
+      return (
+        <CProgress color={color} value={maxValue}>
+          <CProgressBar>+{aMyFollows.length} {msg}</CProgressBar>
+        </CProgress>
+      )   
+  }
   return (
     <CProgress color={color} value={progressValue} variant={!eose ? "striped" : ""} animated>
-      <CProgressBar>+{numFollows} {msg}</CProgressBar>
+      <CProgressBar>+{events.length} {msg}</CProgressBar>
     </CProgress>
   )
 }
@@ -215,26 +232,25 @@ const ExportGrapevineList = () => {
   
   useEffect(() => {
     if (startFirstHop ) {
-      setProgressMessage('my follows list')
+      setProgressMessage('Downloading my follows list...')
       setProgressColor('info')
       setProgressFirstHop((<LoadEventsProgress listener={2} color="info" msg="my follows" maxValue={30} setNextProgress={setStartSecondHop}/> ))
     }
-  }, [startFirstHop, progressColor, setStartSecondHop])
+  }, [startFirstHop])
 
   useEffect(() => {
     if (startSecondHop) {
-      setProgressMessage('my follows follows')
+      setProgressMessage('Downloading my follows follows...')
       setProgressColor('success')
       setProgressSecondHop((<LoadEventsProgress listener={4} color="success" msg="my follows follows" maxValue={50} /> ))
     }
-  }, [startSecondHop, progressColor])
+  }, [startSecondHop])
 
 
   async function doExport(){
-    setLoading(true)
     // do signin
-    if(!isSignedIn) {
-      setProgressMessage('signing into Nostr ...')
+    if(!loading && !isSignedIn) {
+      setProgressMessage('Signing into Nostr ...')
       setProgressColor('warning')
       setProgressLogin((
       <CProgress color="warning" value={10} variant={"striped"} animated>
@@ -242,12 +258,13 @@ const ExportGrapevineList = () => {
       </CProgress>))
       await loginByExtension();
     }
-    if(isSignedIn){
+    if(!loading && isSignedIn){
       setProgressLogin((
       <CProgress color="warning" value={10}>
         <CProgressBar>me</CProgressBar>
       </CProgress>))
-      setStartFirstHop(true)
+      if(!startFirstHop) setStartFirstHop(true)
+      setLoading(true)
     }
 
   }
@@ -258,7 +275,7 @@ const ExportGrapevineList = () => {
         <h3>Export "Grapevine WoT" List</h3>
         <CButton color={progressColor}  className="my-3" active tabIndex={-1} 
           onClick={() => doExport()} disabled={loading}>
-            {!loading ? 'Export to Nostr' : loaded ? 'Success!' : 'Donloading '+progressMessage+'...' }
+            {!loading ? 'Export to Nostr' : loaded ? 'Success!' : progressMessage }
         </CButton>
         <CProgressStacked>
           {progressLogin}
