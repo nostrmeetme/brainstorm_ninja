@@ -142,8 +142,9 @@ const LoadEventsProgress = ({listener = 2, color="primary", maxValue=20, msg="",
  * adapted from views/helloWorld/testPage7
  */
 const CreateEventKind30000 = () => {
-  const eventTitle = "My Grapevine Recomended" 
-  const eventDescription = "a list of nostr npubs and their associated Grapevine WoT Scores as calculated by the Tapestry Protocol"
+  const eventTitle = "My Grapevine Recomended Follows" 
+  const eventDescription = "a list of nostr npubs and their associated Grapevine WoT Scores as calculated by the Tapestry Protocol on " + Date.now() + ". Get yours at grapevine.my"
+  const eventIdentifierTag = "grapevineReccomendedFollows"
   const oEventDefault = {
     content: '',
     kind: 30000,
@@ -151,7 +152,7 @@ const CreateEventKind30000 = () => {
       ['P', 'tapestry'],
       ['wordType', 'influenceScoresList'],
       ['w', 'influenceScoresList'],
-      ['d', 'influenceScoresList'],
+      ['d', eventIdentifierTag],
       ['title', eventTitle],
       [ 'description', eventDescription ],
       ['c', ''],
@@ -162,7 +163,7 @@ const CreateEventKind30000 = () => {
   const myNpub = useSelector((state) => state.profile.npub)
   const oProfilesByPubkey = useSelector((state) => state.profiles.oProfiles.byPubkey)
   const oProfilesByNpub = useSelector((state) => state.profiles.oProfiles.byNpub)
-  const aMyFollows = oProfilesByNpub[myNpub] ? oProfilesByNpub[myNpub].follows : []
+  const aMyFollows = useSelector((state) => state.profile.kind3.follows)
   const myPictureUrl = useSelector((state) => state.profile.picture)
   const [eventVisible, setEventVisible] = useState(false)
   const [eventPublished, setEventPublished] = useState(false)
@@ -174,7 +175,7 @@ const CreateEventKind30000 = () => {
   Object.keys(oProfilesByPubkey).forEach((pubkey, item) => {
     const npub = nip19.npubEncode(pubkey)
     let influence = '' + oProfilesByNpub[npub].wotScores.baselineInfluence.influence // '' + is to make sure it is stringified
-    if (influence > 0 && !aMyFollows[pubkey]) {
+    if (influence > 0 && !aMyFollows.includes(pubkey)) {
       aTags.push(['p', pubkey, '', influence]) // third string is typically a relay url; currently it is empty string
     }
   })
@@ -190,7 +191,7 @@ const CreateEventKind30000 = () => {
   // setNumProfiles(aTagsSortedTop1000.length)
   ndkEvent.tags = oEventDefault.tags.concat(aTagsSortedTop1000)
   // setNumTags(ndkEvent.tags.length)
-  ndkEvent.sign(signer)
+  if(!ndkEvent.sig) ndkEvent.sign(signer)
   const eventString = JSON.stringify(ndkEvent.rawEvent(), null, 4)
   console.log('ndkEvent: ' + eventString)
   // if (whetherToPublish) {
@@ -207,9 +208,10 @@ const CreateEventKind30000 = () => {
     <div>
       <center class="px-5">
         <p><small style={{color:"#666"}}>Your Grapevine found {aTagsSorted.length} quality npubs in your network. 
-          Here are the top {aTagsSortedTop1000.length} reccomendations for you.</small></p>
+          Here are the top {aTagsSortedTop1000.length} reccomendationed new follows for you.</small></p>
         <div class="card mx-5 p-2">
           <h3>{eventTitle}</h3>
+          <code>{eventIdentifierTag}</code>
           <p>{eventDescription}</p>
           <CButton color={eventPublished ? "secondary" : "primary"} className="my-3" active disabled={eventPublished} onClick={() => ndkEvent.publish().then(setEventPublished(true))}>
             {eventPublished ? "Published!" : "Publish To Nostr"}
@@ -422,7 +424,7 @@ const ExportGrapevineList = () => {
 
           <h4><strong>Try it now.</strong></h4>
           <ol>
-            <li>Use the button bellow to create and publish a "My Grapevine Reccomended" Nostr list of npubs.</li>
+            <li>Use the button bellow to create and publish a "My Grapevine Reccomended Follows" Nostr list of npubs.</li>
             <li>Go to your favorite 
             (<a href="https://github.com/nostr-protocol/nips/blob/master/51.md" target="_blank">NIP-51</a> supported *) Nostr client
              and use this list as a custom feed to discover new and interesting follows.</li>
@@ -435,7 +437,7 @@ const ExportGrapevineList = () => {
 
         <CButton color={progressColor}  className="my-3" active tabIndex={-1} 
           onClick={() => doExport()} disabled={loading || !window.nostr}>
-            {!window.nostr ? "missing browser extension..." : !loading ? 'Get My Grapevine Reccomended' : loaded ? 'Complete!' : progressMessage }
+            {!window.nostr ? "missing browser extension..." : !loading ? 'Get My Grapevine Reccomended Follows' : loaded ? 'Complete!' : progressMessage }
         </CButton>
         {!window.nostr ? (<p><small class="text-warning">Please download and install a <br/><a href="https://nostr.org/#extensions" target="_blank">Nostr browser extension</a> to use this site.</small></p>) : ""}
         {userProfileDisplay}
